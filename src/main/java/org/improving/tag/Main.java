@@ -5,20 +5,23 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        while(true) {
+        boolean loop = true;
+        while (loop) {
             System.out.print("> ");
-            String input = scanner.nextLine().trim()
+            String input = scanner.nextLine().trim();
             if (input.equals("look")) {
                 System.out.println("You look around.");
-            }
-            if (input.equals("inventory")){
+            } else if (input.equals("inventory")) {
                 System.out.println("You are carrying nothing.");
-            }
-            if (input.equals("dance")) {
+            } else if (input.equals("dance")) {
                 System.out.println("You dance around.");
-            }
-            if (input.equals("jump")) {
+            } else if (input.equals("exit")) {
+                System.out.println("Goodbye.");
+                loop = false;
+            } else if (input.equals("jump")) {
                 System.out.println("You jump in the air.");
+            } else {
+                System.out.println("Huh? I don't understand.");
             }
         }
     }
