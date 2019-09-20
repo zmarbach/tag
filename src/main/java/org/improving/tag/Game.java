@@ -18,20 +18,20 @@ public class Game {
                 new JumpCommand()};
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
     private void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getStartTime() {
+        return startTime;
     }
 
     private void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
     }
 
     public void run() {

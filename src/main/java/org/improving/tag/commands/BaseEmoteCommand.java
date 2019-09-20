@@ -1,5 +1,7 @@
 package org.improving.tag.commands;
 
+import org.improving.tag.Game;
+
 public abstract class BaseEmoteCommand implements Command {
     private String cmdText;
     private String cmdResponse;
@@ -8,6 +10,7 @@ public abstract class BaseEmoteCommand implements Command {
         this.cmdText = cmdText;
         this.cmdResponse = cmdResponse;
     }
+
     @ Override
     public boolean isValid(String input) {
         return input.equals(cmdText);
