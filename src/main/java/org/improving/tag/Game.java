@@ -18,6 +18,8 @@ public class Game {
         this.Commands = Commands;
         this.io = io;
         //have to set Command = this.Commands so we can reference Commands outside of this scope (outside curly braces)
+        //start time not in this because we want to wait to start the clock once the game is actually RUN...not when the object is initiated.
+        //exit time not in this cuz not applicable, cant set the end time at the beginning.
     }
 
     private void setStartTime(Date startTime) {
