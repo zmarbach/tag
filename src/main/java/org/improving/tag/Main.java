@@ -9,8 +9,9 @@ public class Main {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(SpringContext.class);
 
-        //same as running all of this with ".run()" at the end?
         Game game = context.getBean(Game.class);
+        // game = run the get.Bean method of context (defined above) and hand it Game.class
+        //it wil run configure everything using SpringContext and run the game.
         game.run();
 
         long elapsedTicks = game.getEndTime().getTime() -

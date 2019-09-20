@@ -11,11 +11,13 @@ public class Game {
     private Date startTime;
     private Date endTime;
     private Command[] Commands;
+    private InputOutput io;
 
 
-    public Game(Command[] Commands) {
-        //what is this line doing below??
+    public Game(Command[] Commands, InputOutput io) {
         this.Commands = Commands;
+        this.io = io;
+        //have to set Command = this.Commands so we can reference Commands outside of this scope (outside curly braces)
     }
 
     private void setStartTime(Date startTime) {
@@ -35,21 +37,21 @@ public class Game {
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
         this.setStartTime(new Date());
 
         boolean loop = true;
         while (loop) {
-            System.out.print("> ");
-            String input = scanner.nextLine().trim();
+            io.displayPrompt("> ");
+            String input = io.receiveInput();
+
             Command validCommand = getValidCommand(input);
             if (null != validCommand) {
                 validCommand.execute(input);
-            } else if (input.equals("exit")) {
-                System.out.println("Goodbye.");
+            } else if (input.equalsIgnoreCase("exit")) {
+                io.displayText("Goodbye.");
                 loop = false;
             } else {
-                System.out.println("Huh? I don't understand.");
+                io.displayText("Huh? I don't understand.");
             }
         }
         this.setEndTime(new Date());
