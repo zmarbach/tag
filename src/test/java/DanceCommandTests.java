@@ -27,7 +27,7 @@ public class DanceCommandTests {
 
 
         //Act
-        target.execute(null);
+        target.execute(null, null);
 
         //Assert
         assertEquals("You dance around.", io.lastText);
@@ -39,7 +39,7 @@ public class DanceCommandTests {
 
 
         //Act
-        var result = target.isValid("dance");
+        var result = target.isValid("dance", null);
 
         //Assert
         assertTrue(result);
@@ -50,7 +50,7 @@ public class DanceCommandTests {
         //Arrange
 
         //Act
-        var result = target.isValid("foobar");
+        var result = target.isValid("foobar", null);
 
         //Assert
         assertFalse(result);
@@ -62,7 +62,7 @@ public class DanceCommandTests {
         //Arrange
 
         //Act
-        var result = target.isValid(null);// this fails because cant trim a NULL (trim is called in BAseEmoteCommand
+        var result = target.isValid(null, null);// this fails because cant trim a NULL (trim is called in BAseEmoteCommand
 
         //Assert
         assertFalse(result);
@@ -74,7 +74,7 @@ public class DanceCommandTests {
 
 
         //Act
-        var result = target.isValid("   dance   ");
+        var result = target.isValid("   dance   ", null);
 
         //Assert
         assertTrue(result);
@@ -86,7 +86,7 @@ public class DanceCommandTests {
 
 
         //Act
-        var result = target.isValid("DANce"); //no spaces here cuz need to test ONLY ONE THING
+        var result = target.isValid("DANce", null); //no spaces here cuz need to test ONLY ONE THING
 
         //Assert
         assertTrue(result);

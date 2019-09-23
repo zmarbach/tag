@@ -23,7 +23,7 @@ public class MoveCommandTests {
     @Test
     public void execute_should_display_all_words_but_move() {
         //Act
-        target.execute("Move to the moon");
+        target.execute("Move to the moon", null);
 
         //Assert
         assertEquals("You proceed to the moon.", io.lastText);
@@ -32,7 +32,7 @@ public class MoveCommandTests {
     @Test
     public void execute_should_display_all_words_but_move_with_spaces() {
         //Act
-        target.execute("Move to the moon");
+        target.execute("Move to the moon", null);
 
         //Assert
         assertEquals("You proceed to the moon.", io.lastText);
@@ -43,7 +43,7 @@ public class MoveCommandTests {
 
 
         //Act
-        var result = target.isValid("move to the moon");
+        var result = target.isValid("move to the moon", null);
 
         //Assert
         assertTrue(result);
@@ -55,7 +55,7 @@ public class MoveCommandTests {
 
 
         //Act
-        var result = target.isValid("   move to the moon   ");
+        var result = target.isValid("   move to the moon   ", null);
 
         //Assert
         assertTrue(result);
@@ -67,7 +67,7 @@ public class MoveCommandTests {
 
 
         //Act
-        var result = target.isValid("MoVe to THe MooN"); //no spaces here cuz need to test ONLY ONE THING
+        var result = target.isValid("MoVe to THe MooN", null); //no spaces here cuz need to test ONLY ONE THING
 
         //Assert
         assertTrue(result);
@@ -78,7 +78,7 @@ public class MoveCommandTests {
         //Arrange
 
         //Act
-        var result = target.isValid("foobar");
+        var result = target.isValid("foobar", null);
 
         //Assert
         assertFalse(result);
@@ -90,7 +90,7 @@ public class MoveCommandTests {
         //Arrange
 
         //Act
-        var result = target.isValid(null);// this fails because cant trim a NULL (trim is called in BAseEmoteCommand
+        var result = target.isValid(null, null);// this fails because cant trim a NULL (trim is called in BAseEmoteCommand
 
         //Assert
         assertFalse(result);
@@ -101,7 +101,7 @@ public class MoveCommandTests {
         //Arrange
 
         //Act
-        var result = target.isValid("move");
+        var result = target.isValid("move", null);
 
         //Assert
         assertFalse(result);

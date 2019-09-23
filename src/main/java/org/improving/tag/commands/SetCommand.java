@@ -5,10 +5,10 @@ import org.improving.tag.InputOutput;
 import org.springframework.stereotype.Component;
 
 @Component
-public class YellPhraseCommand implements Command {
+public class SetCommand implements Command {
     private InputOutput io;
 
-    public YellPhraseCommand (InputOutput io) {
+    public SetCommand(InputOutput io) {
         this.io = io;
     }
 
@@ -16,15 +16,19 @@ public class YellPhraseCommand implements Command {
     public boolean isValid(String input, Game game) {
         if (input == null) return false;
         input = input.trim();
-        var parts = input.split(" ");
-        if (parts.length == 1) return false;
-        return parts[0].equalsIgnoreCase("yell");
+        if (input.contains("=")) {
+            var parts = input.split("=");
+            if (parts.length == 1) {
+                return false; }
+            return parts[0].equalsIgnoreCase("@set name");
         }
+        return false;}
 
     @Override
     public void execute(String input, Game game) {
         input = input.trim();
-        var phrase = input.substring(5);
-        io.displayText("You yell " + phrase + "!!!");
+        var name = input.substring(10);
+        game.getPlayer().setName(name);
+        io.displayText("Your name is now " + name + ".");
     }
 }
