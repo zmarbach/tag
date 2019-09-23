@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class InventoryCommand extends BaseEmoteCommand {
+
     public InventoryCommand(InputOutput io) {
         super   ("inventory", "You are carrying nothing.", io);
     }
