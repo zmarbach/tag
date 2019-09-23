@@ -9,18 +9,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SetNameTest {
     SetCommand target;
     TestInputOutput io;
+    Game game;
 
     @BeforeEach
     public void arrange() {
         //Arrange
         io = new TestInputOutput();
         target = new SetCommand(io);
+        game = new Game(null,io);
     }
 
     @Test
     public void execute_should_display_all_words_but_setName() {
         //Act
-        target.execute("@set name=Fluefedor", new Game(null, io));
+        target.execute("@set name=Fluefedor", game);//had to call instance of game here because required parameter
 
         //Assert
         assertEquals("Your name is now Fluefedor.", io.lastText);
@@ -29,7 +31,7 @@ public class SetNameTest {
     @Test
     public void execute_should_display_all_words_but_setName_with_spaces() {
         //Act
-        target.execute("   @set name=Fluefedor   ", new Game(null, io)); //had to call come instance of game here
+        target.execute("   @set name=Fluefedor  ", game); //had to call instance of game here
 
         //Assert
         assertEquals("Your name is now Fluefedor.", io.lastText);
