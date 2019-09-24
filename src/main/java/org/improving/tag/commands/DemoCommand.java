@@ -4,7 +4,7 @@ import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
 import org.springframework.stereotype.Component;
 
-@Component//this tells Spring that is should register this as a Command and pass it to Game
+//@Component//this tells Spring that is should register this as a Command and pass it to Game
 // construcotr when it creates list of commands for the game
 public class DemoCommand implements Command {
     private final InputOutput io;//final says that once constructor is completed, then we cannot change io

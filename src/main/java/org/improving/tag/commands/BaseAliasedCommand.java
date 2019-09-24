@@ -31,5 +31,6 @@ public abstract class BaseAliasedCommand implements Command {//abstract because 
             //return false;
     }
 
-        //do NOT need execute method...leave that to child class
+        //do NOT need execute method...leave that to child class because execute may not be same for each command
+    //      (Ex: LOOK might want you to look around, but in future HEAL might want you to do something diff, but HEAL still extends BaseAliasedCommand).)
 }
