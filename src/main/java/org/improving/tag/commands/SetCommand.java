@@ -28,7 +28,7 @@ public class SetCommand implements Command {
     public void execute(String input, Game game) {
         input = input.trim();
         var name = input.substring(10);
-        game.getPlayer().setName(name);
+        game.getPlayer().setName(name);// need this in order to change the Player Name on Player class to whatever user changed it to
         io.displayText("Your name is now " + name + ".");
     }
 }
