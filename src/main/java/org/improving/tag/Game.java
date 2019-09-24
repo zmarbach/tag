@@ -13,15 +13,21 @@ public class Game {
     private Command[] Commands;
     private InputOutput io;
     private Player p;
+    private Location startingLocation;
 
 
     public Game(Command[] Commands, InputOutput io) {
+        startingLocation = buildWorld();
         this.Commands = Commands;
         this.io = io;
-        this.p = new Player(); // could also add p as a parameter and set it equal to 'p' here. then would have to put '@Component' on the Player class so Spring could generate one for us...rather than making a new instance of Player here)
+        this.p = new Player(startingLocation); // could also add p as a parameter and set it equal to 'p' here. then would have to put '@Component' on the Player class so Spring could generate one for us...rather than making a new instance of Player here)
         //have to set Command = this.Commands so we can reference Commands outside of this scope (outside curly braces)
         //start time not in this because we want to wait to start the clock once the game is actually RUN...not when the object is initiated.
         //exit time not in this cuz not applicable, cant set the end time at the beginning.
+    }
+
+    public Location getStartingLocation() {
+        return startingLocation;
     }
 
     public Player getPlayer() {
@@ -76,4 +82,26 @@ public class Game {
         }
         return null;
     }
+
+    private Location buildWorld() {//private because we dont want anyone else to build a world
+        var tdh = new Location();
+        tdh.setName("The Deathly Hallows");
+
+        var td = new Location();
+        td.setName("The Dessert");
+
+        var ta = new Location();
+        ta.setName("The Amazon");
+
+        var tmcs = new Location();
+        tmcs.setName("The Mac & Cheese Shop");
+
+        tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));///case doesnt matter cuz we will igNorecase
+        tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "deathly", "the"));
+        td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
+        tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy","hwy 121", "h121"));
+
+        return tdh;
+    }
+
 }

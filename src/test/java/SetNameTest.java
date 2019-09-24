@@ -13,6 +13,7 @@ public class SetNameTest {
     SetCommand target;
     TestInputOutput io;
     Game game;
+    Player player;
 
     @BeforeEach
     public void arrange() {
@@ -21,7 +22,7 @@ public class SetNameTest {
         target = new SetCommand(io);
         game =  mock(Game.class);//creating a new mock Game. Getting the actually class, not an instance of the class.
 
-        Player player = new Player();
+        Player player = new Player(null);
         player = spy(player);
         player.setName("hi");
         player.setHitPoints(50);
@@ -31,8 +32,8 @@ public class SetNameTest {
 
 
     @Test
-    public void execute_should_display_all_words_but_setName() {
-        Player player = new Player();
+    public void execute_should_set_Name() {
+        Player player = new Player(null);//don't need location because testing setting name, not about setting location.
         player = spy(player);//follows player around and reports on everything it does. Wrapping it with a "spy". don't talk to the Player itself, talk to the spy player (sort of like mock)
         player.setName("hi");
         player.setHitPoints(50);
@@ -42,11 +43,17 @@ public class SetNameTest {
         //Act
         target.execute("@set name=Fluefedor", game);//had to call instance of game here because required parameter
 
-
         //Assert
         verify(player).setName("Fluefedor");
-        verify(game, times(1)).getPlayer();//verify the behavior of game, specifically verify the # of times get(Player) is called.
-        //assertEquals("Your name is now Fluefedor.", io.lastText);
+    }
+
+    @Test
+    public void execute_should_display_all_words_but_setName() {
+        //Act
+        target.execute("@set name=Fluefedor", game); //had to call instance of game here
+
+        //Assert
+        assertEquals("Your name is now Fluefedor.", io.lastText);
     }
 
     @Test

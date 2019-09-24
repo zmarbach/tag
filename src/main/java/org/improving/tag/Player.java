@@ -3,6 +3,20 @@ package org.improving.tag;
 public class Player {
     private String name = "The Player";
     private int hitPoints = 100;
+    private Location location;
+
+    public Player(Location location) {
+        this.location = location;//Player needs to be initialized to show FIRST LOCATION but want GAME responsible for setting the location,
+        // so make contructor for Player that requires we pass it a Location as parameter.
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
     public String getName() {return name;}
 
