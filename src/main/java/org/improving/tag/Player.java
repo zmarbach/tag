@@ -7,7 +7,7 @@ public class Player {
 
     public Player(Location location) {
         this.location = location;//Player needs to be initialized to show FIRST LOCATION but want GAME responsible for setting the location,
-        // so make contructor for Player that requires we pass it a Location as parameter.
+        // so make constructor for Player that requires we pass it a Location as parameter and then pass the startingLocation when we create a player in Game
     }
 
     public Location getLocation() {

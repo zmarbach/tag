@@ -35,7 +35,7 @@ public class MoveCommand implements Command {//takes the isValid and execute met
                 exit = e;
             }
             else {
-                for (var a : e.getAliases()) {
+                for (var a : e.getAliases()) {//getting all aliases for ALL exits at the location and checking them against user input...this is why we cant have same alias in 2 exits for the same Location (but it is ok in different Locations because only pulling in aliases for ONE location, each time we go through the loop))
                     if (a.equalsIgnoreCase(destination)) {
                         exit = e;
                         break;
@@ -48,7 +48,7 @@ public class MoveCommand implements Command {//takes the isValid and execute met
             io.displayText("This route is unavailable.");
             return;
         }
-        game.getPlayer().setLocation(exit.getDestination());
+        game.getPlayer().setLocation(exit.getDestination());///this is where we SET the new location of the player after we move (the destination of the exit name or alias the user typed)
         io.displayText("You travel " + exit.getName() + ".");
     }
 }

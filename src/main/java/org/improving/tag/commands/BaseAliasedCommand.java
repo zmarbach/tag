@@ -19,7 +19,6 @@ public abstract class BaseAliasedCommand implements Command {//abstract because 
         var trimmedInput = input.trim();
         return aliases.stream().filter(input.trim()::equalsIgnoreCase).findFirst().isPresent();
 
-        //look through the array aliases and check i
     //we have ArrayList aliases, give me stream version, filter stream, passing each member through equals ignore case of input, if true, give us the first one.
     //conveyer belt example, pass aliases and leave TRUE results (input that is a valid alias) on the conveyer belt. at the end of the conveyer belt, give me the first one
     //is Present - if not - return false, if valid alias IS PRESENT - return TRUE

@@ -9,3 +9,8 @@ public class DanceCommand extends BaseEmoteCommand {
         super   ("dance", "You dance around.", io);
     }
 }
+
+//if we wanted to make it so that users could type different aliases for dance command, then i would have to change the relationship and
+//make Dance Command Extend BaseALIASEDCommand, so that I can push all aliases to the isValid method on BaseAlasedCommand, then take the execute method
+//from BaseEmoteCommand and paste it here ON DanceCommand.
+// (would also have to have to hand DanceCOmmand an io by doing this.io = io in the contrcutor and   making a private InputOutput variable at top of class
