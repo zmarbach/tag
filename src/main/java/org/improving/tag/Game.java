@@ -13,12 +13,14 @@ public class Game {
     private InputOutput io;
     private Player p;
     private Location startingLocation;
+    private final SaveGameFactory saveFactory;
 
 
-    public Game(Command[] Commands, InputOutput io) {
+    public Game(Command[] Commands, InputOutput io, SaveGameFactory saveFactory) {
         startingLocation = buildWorld();
         this.Commands = Commands;
         this.io = io;
+        this.saveFactory = saveFactory;
         this.p = new Player(startingLocation); // could also add p as a parameter and set it equal to 'p' here. then would have to put '@Component' on the Player class so Spring could generate one for us...rather than making a new instance of Player here)
         //have to set Command = this.Commands so we can reference Commands outside of this scope (outside curly braces)
         //start time not in this because we want to wait to start the clock once the game is actually RUN...not when the object is initiated.
@@ -61,6 +63,7 @@ public class Game {
             if (null != validCommand) {
                 validCommand.execute(input, this); //passing Game instance as parameter for execute because it needs input AND Game instance in order to run
             } else if (input.equalsIgnoreCase("exit")) {
+                saveFactory.save(this);///saving the game by sending this Game to the save method on SaveGameFactory
                 io.displayText("Goodbye.");
                 loop = false;
             } else {
