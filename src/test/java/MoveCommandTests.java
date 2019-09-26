@@ -1,3 +1,4 @@
+import org.improving.tag.Location;
 import org.improving.tag.commands.MoveCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MoveCommandTests {
     MoveCommand target;
     TestInputOutput io;
+    Location loc;
 
     //have to declare target first so it can be used in methods below
     //cant var here because we arent initializing, so dont have the Type on the other side of equals sign.

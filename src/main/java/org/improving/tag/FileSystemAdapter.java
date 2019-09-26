@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;// acknowledges this could result in an exception
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -22,5 +26,15 @@ public class FileSystemAdapter {
         }
 
         return file.getAbsolutePath();//return a string to the SaveGameFactory, the string will be the filepath of the file we put saveContents in
+    }
+
+    public Map<String, String> loadFile(String path) throws IOException {//hand it a path and get back a Map
+        Map<String, String> properties = new HashMap<>();//create new hashmap to put things in
+        List<String> contents = Files.readAllLines(Path.of(path));   //read all the lines in the file we give it and return a list of strings
+        for (String line : contents) {//for every line in the file, run this loop
+            String[] temp = line.split("\\|"); //split on | and put the strings into an array called temp
+            properties.put(temp[0], temp[1]); //put each string from the split in the Hashmap (as key and value) that we created above (called properties)
+        }
+        return properties;
     }
 }

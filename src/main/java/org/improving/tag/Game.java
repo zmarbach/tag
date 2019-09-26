@@ -1,17 +1,21 @@
 package org.improving.tag;
 
 import org.improving.tag.commands.*;
+import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class Game {
     private Date startTime;
     private Date endTime;
-    private Command[] Commands;
+    private Command[] Commands; //Spring creates this array of all our commands. It scans for '@Component' and if that class implements Command, then Spring puts that class into the Commands[];
     private InputOutput io;
     private Player p;
+    private List<Location> locationList = new ArrayList<>();
     private Location startingLocation;
     private final SaveGameFactory saveFactory;
 
@@ -88,39 +92,51 @@ public class Game {
     private Location buildWorld() {//private because we dont want anyone else to build a world
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
+        this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against
 
         var td = new Location();
         td.setName("The Dessert");
+        this.locationList.add(td);
 
         var ta = new Location();
         ta.setName("The Amazon");
+        this.locationList.add(ta);
 
         var tmcs = new Location();
         tmcs.setName("The Mac & Cheese Shop");
+        this.locationList.add(tmcs);
 
         var tvm = new Location();
         tvm.setName("The Velvet Moose");
+        this.locationList.add(tvm);
 
         var a = new Location();
         a.setName("Airport");
+        this.locationList.add(a);
 
         var tr = new Location();
         tr.setName("The Reef");
+        this.locationList.add(tr);
 
         var tm  = new Location();
         tm.setName("The Mountains");
+        this.locationList.add(tm);
 
         var tict = new Location();
         tict.setName("The Ice Cream Truck");
+        this.locationList.add(tict);
 
         var mall = new Location();
         mall.setName("The Mall");
+        this.locationList.add(mall);
 
         var md = new Location();
         md.setName("Mount Doom");
+        this.locationList.add(md);
 
         var tvod = new Location();
         tvod.setName("The Volcano of Death");
+        this.locationList.add(tvod);
 
         tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));///case doesnt matter cuz we will igNorecase
         tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "deathly", "the"));
@@ -151,4 +167,12 @@ public class Game {
         return tdh;
     }
 
+    public Location getLocationOf(String intendedLocationName) {
+        for (Location location: locationList) {//for each Location in the list we just created
+            if(intendedLocationName.equalsIgnoreCase(location.getName())) {//check to see if intendedLocationName we passes in equals the name of the location
+                return location;//return the actual Location "tdh" to whatever called getLocationOf)
+            }
+        }
+        return null;
+    }
 }

@@ -16,6 +16,7 @@ public class SaveGameFactory {
         this.io = io;
     }
 
+
     public String save(Game game) { //create file and then store location name in that file and give us the filepath
         var locationName = game.getPlayer().getLocation().getName();
         Map<String, String> saveContents = new HashMap<>(); //dictionary stores the "key" and "value" associated with the key
@@ -32,5 +33,20 @@ public class SaveGameFactory {
         }
 
         return path;
+    }
+
+    public void load(String path, Game g) {
+        Map<String,String> saveContents;//put this out here so we can use it in the lines outside of the try/catch block
+
+        try {// loadFile gave us a notification that it might throw and excpetion, click alt Enter and surround it with a try/catch
+            saveContents = fsa.loadFile(path); //we put a map in, so expecting to get a map back out when we load
+        } catch (IOException ex) {
+            io.displayText(ex.toString());
+            io.displayText("Failed to load file.");
+            return;//get out, nothing was changed
+        }
+        Location lastKnownLocation = g.getLocationOf(saveContents.get("location"));//get the VALUE associated with the key called "location" on saveContents Hashmap, give it to getLocationOf method on Game, which will return the ACTUAL location, not just the location name ("tdh" NOT "The Deathly Hallows")
+        g.getPlayer().setLocation(lastKnownLocation);//then set the players actual location ("tdh" to lastKnownLocation (where they were when we saved it)
+
     }
 }

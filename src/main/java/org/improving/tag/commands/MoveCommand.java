@@ -3,11 +3,13 @@ package org.improving.tag.commands;
 import org.improving.tag.Exit;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
+import org.improving.tag.Location;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MoveCommand implements Command {//takes the isValid and execute methods below because it is an implementor of Command interface
     private InputOutput io;
+    private Location location;
 
     public MoveCommand(InputOutput io) {
         this.io = io;
@@ -19,6 +21,7 @@ public class MoveCommand implements Command {//takes the isValid and execute met
         input = input.trim();
         var parts = input.split(" ");
         if (parts.length == 1) return false;//if there is only 1 string in the array, then isValid is FALSE , so NOT valid command, so skips to next part of loop in Game and, not "exit", so returns "Huh?".
+
         return parts[0].equalsIgnoreCase("move");
 
         //there has to be a at least one other word, needs to be another word in the string.
@@ -28,6 +31,11 @@ public class MoveCommand implements Command {//takes the isValid and execute met
     public void execute(String input, Game game) {
         input = input.trim();
         var destination = input.substring(5);
+
+        if(game.getPlayer().getLocation().getAdversary() != null) {
+            io.displayText("YOU SHALL NOT PASS!!!");
+            return;
+        }
 
         Exit exit = null;//checking to see if user input equals any exit name or alias
         for (var e: game.getPlayer().getLocation().getExits()) {

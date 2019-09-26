@@ -9,6 +9,15 @@ public class Location {
     private List<String> tags = new ArrayList<String>();
     ///have to initialize this as soon as we create the class (even if it has nothing in it) otherwise the value is NULL and we will get null pointer exception when we try to run method off of it
     private List<Exit> exits = new ArrayList<Exit>();
+    private Adversary adversary;
+
+    public Adversary getAdversary() {
+        return adversary;
+    }
+
+    public void setAdversary(Adversary adversary) {
+        this.adversary = adversary;
+    }
 
     public String getName() {
         return name;
