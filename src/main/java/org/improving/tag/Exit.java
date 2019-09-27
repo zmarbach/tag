@@ -9,7 +9,7 @@ public class Exit {
     private Location destination;
     private List<String> aliases = new ArrayList<String>();
 
-    public Exit() {}//add this so we can use a totally empty contructor for tests and stuff
+    public Exit() {}//add this so we can use a totally empty constructor for tests and stuff
 
     public Exit(String name, Location destination, String...aliases) {///"..." has to be the last parameter
         this.name = name;

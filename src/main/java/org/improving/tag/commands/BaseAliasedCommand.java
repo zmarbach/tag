@@ -16,7 +16,7 @@ public abstract class BaseAliasedCommand implements Command {//abstract because 
 
     @Override
     public boolean isValid(String input, Game game) {
-        var trimmedInput = input.trim();
+        if(input == null) return false;
         return aliases.stream().filter(input.trim()::equalsIgnoreCase).findFirst().isPresent();
 
     //we have ArrayList aliases, give me stream version, filter stream, passing each member through equals ignore case of input, if true, give us the first one.

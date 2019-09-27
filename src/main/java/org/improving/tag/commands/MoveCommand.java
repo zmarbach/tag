@@ -35,7 +35,7 @@ public class MoveCommand implements Command {//takes the isValid and execute met
         if(game.getPlayer().getLocation().getAdversary() != null) {
             io.displayText("YOU SHALL NOT PASS!!!");
             io.displayText(game.getPlayer().getLocation().getAdversary().getName() + " emerges from the darkness. How will you proceed?");
-            //return;
+            return;
         }
 
         Exit exit = null;//checking to see if user input equals any exit name or alias

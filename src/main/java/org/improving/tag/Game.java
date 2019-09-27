@@ -141,6 +141,7 @@ public class Game {
         tvod.setName("The Volcano of Death");
         this.locationList.add(tvod);
 
+        //create new exits and pass name, destination, and aliases...because these are parameters in the Exit constructor!!!
         tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));///case doesnt matter cuz we will igNorecase
         tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "deathly", "the"));
         td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
