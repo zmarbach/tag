@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Adversary {
     private String name;
-    private int hitPoints;//set this your self
-    private int damageTaken;
-    private int attackDamage;//add 10 dammage every time your attack lands
+    private int hitPoints = 100;
+    private int damageTaken = 0;
+    private int attackDamage = 0;//assuming this is how powerful each attack is from the adversary;
 
     public String getName() {
         return name;
@@ -22,7 +22,7 @@ public class Adversary {
     }
 
     public void setHitPoints(int hitPoints) {
-        hitPoints = hitPoints;
+        this.hitPoints = hitPoints;
     }
 
     public int getDamageTaken() {
@@ -30,7 +30,7 @@ public class Adversary {
     }
 
     public void setDamageTaken(int damageTaken) {
-        damageTaken = damageTaken;
+        this.damageTaken = damageTaken;
     }
 
     public int getAttackDamage() {
@@ -38,6 +38,6 @@ public class Adversary {
     }
 
     public void setAttackDamage(int attackDamage) {
-        attackDamage = attackDamage;
+        this.attackDamage = attackDamage;
     }
 }

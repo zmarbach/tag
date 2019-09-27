@@ -92,6 +92,9 @@ public class Game {
     private Location buildWorld() {//private because we dont want anyone else to build a world
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
+        var s = new Adversary();
+        s.setName("Sauron");
+        tdh.setAdversary(s);
         this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against
 
         var td = new Location();
