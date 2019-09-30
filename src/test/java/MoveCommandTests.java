@@ -34,7 +34,7 @@ public class MoveCommandTests {
     @Test
     public void execute_should_display_all_words_but_move_with_spaces() {
         //Act
-        target.execute("Move to the moon", null);
+        target.execute(" Move to the moon   ", null);
 
         //Assert
         assertEquals("You proceed to the moon.", io.lastText);

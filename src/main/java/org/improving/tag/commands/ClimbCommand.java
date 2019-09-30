@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class ClimbCommand extends BaseEmoteCommand {
 
     public ClimbCommand(InputOutput io) {
+
         super("climb", "You climb up the cliff.", io);
     }
 }
