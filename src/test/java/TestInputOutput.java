@@ -10,9 +10,12 @@ public class TestInputOutput implements InputOutput {
     }
 
     @Override
-    public void displayText(String text) {
-        this.lastText= text;//displayText method receives (as a parameter) the response we want printed to the screen...instead just save that response here as a class level variable of TestInputOutput
+    public void displayText(Object text) {//played with this to demonstrate toString (making Object text to a string)
+        this.lastText= text.toString();//displayText method receives (as a parameter) the response we want printed to the screen...instead just save that response here as a class level variable of TestInputOutput
     }
+
+    @Override
+    public void displayNewLine() {    }
 
     @Override
     public void displayPrompt(String prompt) {

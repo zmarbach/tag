@@ -3,7 +3,6 @@ package org.improving.tag.commands;
 import org.improving.tag.*;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 
 @Component
 public class LoadCommand implements Command {

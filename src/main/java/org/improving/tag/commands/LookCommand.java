@@ -1,6 +1,5 @@
 package org.improving.tag.commands;
 
-import org.improving.tag.Exit;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,8 @@ public class LookCommand extends BaseAliasedCommand {
         var location = game.getPlayer().getLocation();
         io.displayText(location.getName());
         io.displayText(location.getDescription());
-        io.displayText("");
+        io.displayText(location.getTreasureChest());
+        io.displayNewLine();
         io.displayText("Exits:");
 
         for (var Exit: location.getExits()){

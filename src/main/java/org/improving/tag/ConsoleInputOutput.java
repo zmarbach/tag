@@ -19,9 +19,15 @@ public class ConsoleInputOutput implements InputOutput {
     }
 
     @Override
-    public void displayText(String text) {
-        System.out.println(text);
-        // dont have to do anything back in the program after this, just give the output to the console and wait.
+    public void displayText(Object text) {//played with this one to demonstrate toString
+        if (!"".equals(text.toString())) {//have to toString it to turn the Object text into a String
+            System.out.println(text);
+        } //else it does what is outside the if...which is nothing
+    }
+
+    @Override
+    public void displayNewLine() {
+        System.out.println();
     }
 
     @Override
