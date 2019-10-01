@@ -3,34 +3,35 @@ package org.improving.tag.commands;
 import org.improving.tag.Exit;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
-import org.improving.tag.Location;
 import org.springframework.stereotype.Component;
 
+
 @Component
-public class MoveCommand implements Command {//takes the isValid and execute methods below because it is an implementor of Command interface
+public class MoveCommand extends BaseAliasedCommand {//takes the isValid and execute methods below because it is an implementor of Command interface
     private InputOutput io;
-    private Location location;
 
     public MoveCommand(InputOutput io) {
+        super(io,"move", "m", "mo", "mov");
         this.io = io;
     }
 
     @Override
-    public boolean isValid(String input, Game game) {
-        if(input == null) return false; //must have this cuz cant trim NULL
-        input = input.trim();
+    public String getCommandPart(String input) {
         var parts = input.split(" ");
-        if (parts.length == 1) return false;//if there is only 1 string in the array, then isValid is FALSE , so NOT valid command, so skips to next part of loop in Game and, not "exit", so returns "Huh?".
-
-        return parts[0].equalsIgnoreCase("move");
-
-        //there has to be a at least one other word, needs to be another word in the string.
+        if (parts.length == 1) throw new UnsupportedOperationException(); //if there is only 1 string in the array, throw an exception. Catch it in isValid method on BaseALiasedCOmmand
+        return parts[0];
     }
 
     @Override
-    public void execute(String input, Game game) {
+    public String getErrorMessage() {
+        return "That route is unavailable.";
+    }
+
+    @Override
+    public void childExecute(String input, Game game) {
         input = input.trim();
-        var destination = input.substring(5);
+        var destination = input.substring(input.indexOf(" ") + 1); //take the input and substring it. Set the starting location of the substring as the first space and then 1 character to the right, and get everything else after that
+
 
         if(game.getPlayer().getLocation().getAdversary() != null) {
             io.displayText("YOU SHALL NOT PASS!!!");
@@ -53,10 +54,8 @@ public class MoveCommand implements Command {//takes the isValid and execute met
             }
             if (exit != null) break;
         }
-        if (exit == null) {
-            io.displayText("This route is unavailable.");
-            return;
-        }
+        if (exit == null) throw new UnsupportedOperationException();//this will go to catch block of BaseAliasedCommand
+
         game.getPlayer().setLocation(exit.getDestination());///this is where we SET the new location of the player after we move (the destination of the exit name or alias the user typed)
         io.displayText("You travel " + exit.getName() + ".");
     }

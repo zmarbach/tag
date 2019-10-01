@@ -8,6 +8,6 @@ public class ClimbCommand extends BaseEmoteCommand {
 
     public ClimbCommand(InputOutput io) {
 
-        super("climb", "You climb up the cliff.", io);
+        super("You climb the cliff.", io, "climb", "c");
     }
 }

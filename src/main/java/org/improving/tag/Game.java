@@ -1,7 +1,6 @@
 package org.improving.tag;
 
 import org.improving.tag.commands.*;
-import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Game {
     private final SaveGameFactory saveFactory;
 
 
-    public Game(Command[] Commands, InputOutput io, SaveGameFactory saveFactory) {
+    public Game(Command[] Commands, InputOutput io, SaveGameFactory saveFactory) throws RuntimeException {
         startingLocation = buildWorld();
         this.Commands = Commands;
         this.io = io;
@@ -60,123 +59,120 @@ public class Game {
 
         boolean loop = true;
         while (loop) {
-            io.displayPrompt("> ");
-            String input = io.receiveInput();
-
-            Command validCommand = getValidCommand(input);
-            if (null != validCommand) {
-                validCommand.execute(input, this); //passing Game instance as parameter for execute because it needs input AND Game instance in order to run
-            } else if (input.equalsIgnoreCase("exit")) {
-                saveFactory.save(this);///saving the game by sending this Game to the save method on SaveGameFactory
-                io.displayText("Goodbye.");
+            try {
+                io.displayPrompt("> ");
+                String input = io.receiveInput();
+                Command validCommand = getValidCommand(input);
+                if (null != validCommand) {
+                    validCommand.execute(input, this); //passing Game instance as parameter for execute because it needs input AND Game instance in order to run
+                } else {
+                    io.displayText("Huh? I don't understand.");
+                }
+            } catch (GameExitException gee) {
                 loop = false;
-            } else {
-                io.displayText("Huh? I don't understand.");
             }
         }
         this.setEndTime(new Date());
-    }
-
-    private Command getValidCommand(String input) {
-        Command validCommand = null;
-        for (Command command : Commands) {
-            if (command.isValid(input, this)) {
-                return command; //Assume the user types 'jump'. This method runs and asks DanceCommand, is this a valid command for you? No.
-                // Ok asks demo command, is this valid for you? No. (Tim example - "but type a dot")
-                // Jump is this valid for you? Yes...run execute!
-            }
         }
-        return null;
-    }
 
-    private Location buildWorld() {//private because we dont want anyone else to build a world
-        var tdh = new Location();
-        tdh.setName("The Deathly Hallows");
-        var s = new Adversary();
-        s.setName("Sauron");
-        tdh.setAdversary(s);
-        this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against
-
-        var td = new Location();
-        td.setName("The Dessert");
-        this.locationList.add(td);
-
-        var ta = new Location();
-        ta.setName("The Amazon");
-        this.locationList.add(ta);
-
-        var tmcs = new Location();
-        tmcs.setName("The Mac & Cheese Shop");
-        this.locationList.add(tmcs);
-
-        var tvm = new Location();
-        tvm.setName("The Velvet Moose");
-        this.locationList.add(tvm);
-
-        var a = new Location();
-        a.setName("Airport");
-        this.locationList.add(a);
-
-        var tr = new Location();
-        tr.setName("The Reef");
-        this.locationList.add(tr);
-
-        var tm  = new Location();
-        tm.setName("The Mountains");
-        this.locationList.add(tm);
-
-        var tict = new Location();
-        tict.setName("The Ice Cream Truck");
-        this.locationList.add(tict);
-
-        var mall = new Location();
-        mall.setName("The Mall");
-        this.locationList.add(mall);
-
-        var md = new Location();
-        md.setName("Mount Doom");
-        this.locationList.add(md);
-
-        var tvod = new Location();
-        tvod.setName("The Volcano of Death");
-        this.locationList.add(tvod);
-
-        //create new exits and pass name, destination, and aliases...because these are parameters in the Exit constructor!!!
-        tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));///case doesnt matter cuz we will igNorecase
-        tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "deathly", "the"));
-        td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
-        td.getExits().add(new Exit("Rocky Road", tict, "road", "rocky", "rr"));
-        td.getExits().add(new Exit("The Dock", a , "dock"));
-        ta.getExits().add(new Exit("Amaz-ing Moose", tvm, "amazing", "moose", "amaz-ing"));
-        tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy 121", "h121"));
-        tmcs.getExits().add(new Exit("Paradise Rd", tr, "paradise", "rd", "paradise road"));
-        tmcs.getExits().add(new Exit("Highway 21", tvod, "21","hwy 21", "h21"));
-        tvm.getExits().add(new Exit("The Pudding Slide", a, "pudding", "pudding slide","slide", "ps"));
-        tvm.getExits().add(new Exit("The Front Door", ta, "front", "door", "fd", "front door"));
-        a.getExits().add(new Exit("flight 121", tm, "121", "f 121"));
-        a.getExits().add( new Exit("Flight to the Mall", mall, "to the Mall", "mall"));
-        tr.getExits().add( new Exit("the city walk", mall, "city walk", "city", "walk", "cw"));
-        tr.getExits().add( new Exit("The Scenic Route", tvm, "scenic route", "scenic", "route"));
-        tm.getExits().add( new Exit("the plane", ta, "plane", "tp"));
-        tm.getExits().add( new Exit("bike trail", tr, "bike", "bt"));
-        tm.getExits().add( new Exit("The narrow trail", md, "narrow", "tnt"));
-        tm.getExits().add( new Exit("The Lava Flow", tvod, "lava flow", "lava", "flow"));
-        tict.getExits().add( new Exit("Magic Portal", md, "magic portal", "magic", "portal"));
-        mall.getExits().add( new Exit("Path to Doom", md, "path", "pd"));
-        mall.getExits().add( new Exit("An escalator of doom", tvod, "escalator", "escalator pof doom"));
-        md.getExits().add( new Exit("The Cab", mall, "cab"));
-        md.getExits().add( new Exit("Jump into Lava", tvod, "jump lava", "lava", "jump"));
-
-
-        return tdh;
-    }
-
-    public Location getLocationOf(String intendedLocationName) {
-        for (Location location: locationList) {//for each Location in the list we just created
-            if(intendedLocationName.equalsIgnoreCase(location.getName())) {//check to see if intendedLocationName we passes in equals the name of the location
-                return location;//return the actual Location "tdh" to whatever called getLocationOf)
+        private Command getValidCommand (String input){
+            Command validCommand = null;
+            for (Command command : Commands) {
+                if (command.isValid(input, this)) {
+                    return command;
+                }
             }
+            return null;
         }
-        return null;
+
+        private Location buildWorld () {//private because we dont want anyone else to build a world
+            var tdh = new Location();
+            tdh.setName("The Deathly Hallows");
+            this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against
+
+            var td = new Location();
+            td.setName("The Dessert");
+            this.locationList.add(td);
+
+            var ta = new Location();
+            ta.setName("The Amazon");
+            this.locationList.add(ta);
+
+            var tmcs = new Location();
+            tmcs.setName("The Mac & Cheese Shop");
+            this.locationList.add(tmcs);
+
+            var tvm = new Location();
+            tvm.setName("The Velvet Moose");
+            this.locationList.add(tvm);
+
+            var a = new Location();
+            a.setName("Airport");
+            this.locationList.add(a);
+
+            var tr = new Location();
+            tr.setName("The Reef");
+            this.locationList.add(tr);
+
+            var tm = new Location();
+            tm.setName("The Mountains");
+            this.locationList.add(tm);
+
+            var tict = new Location();
+            tict.setName("The Ice Cream Truck");
+            this.locationList.add(tict);
+
+            var mall = new Location();
+            mall.setName("The Mall");
+            this.locationList.add(mall);
+
+            var md = new Location();
+            md.setName("Mount Doom");
+            this.locationList.add(md);
+            var adv = new Adversary();
+            adv.setName("Sauron");
+            md.setAdversary(adv);
+
+            var tvod = new Location();
+            tvod.setName("The Volcano of Death");
+            this.locationList.add(tvod);
+
+            //create new exits and pass name, destination, and aliases...because these are parameters in the Exit constructor!!!
+            tdh.getExits().add(new Exit("Heaven Ave", tmcs, "h", "heaven", "ave"));///case doesnt matter cuz we will igNorecase
+            tdh.getExits().add(new Exit("The Deathly Brownie", td, "tdb", "brownie", "deathly", "the"));
+            td.getExits().add(new Exit("Camel Path", ta, "cp", "camel", "path"));
+            td.getExits().add(new Exit("Rocky Road", tict, "road", "rocky", "rr"));
+            td.getExits().add(new Exit("The Dock", a, "dock"));
+            ta.getExits().add(new Exit("Amaz-ing Moose", tvm, "amazing", "moose", "amaz-ing"));
+            tmcs.getExits().add(new Exit("Highway 121", ta, "121", "hwy 121", "h121"));
+            tmcs.getExits().add(new Exit("Paradise Rd", tr, "paradise", "rd", "paradise road"));
+            tmcs.getExits().add(new Exit("Highway 21", tvod, "21", "hwy 21", "h21"));
+            tvm.getExits().add(new Exit("The Pudding Slide", a, "pudding", "pudding slide", "slide", "ps"));
+            tvm.getExits().add(new Exit("The Front Door", ta, "front", "door", "fd", "front door"));
+            a.getExits().add(new Exit("flight 121", tm, "121", "f 121"));
+            a.getExits().add(new Exit("Flight to the Mall", mall, "to the Mall", "mall"));
+            tr.getExits().add(new Exit("the city walk", mall, "city walk", "city", "walk", "cw"));
+            tr.getExits().add(new Exit("The Scenic Route", tvm, "scenic route", "scenic", "route"));
+            tm.getExits().add(new Exit("the plane", ta, "plane", "tp"));
+            tm.getExits().add(new Exit("bike trail", tr, "bike", "bt"));
+            tm.getExits().add(new Exit("The narrow trail", md, "narrow", "tnt"));
+            tm.getExits().add(new Exit("The Lava Flow", tvod, "lava flow", "lava", "flow"));
+            tict.getExits().add(new Exit("Magic Portal", md, "magic portal", "magic", "portal"));
+            mall.getExits().add(new Exit("Path to Doom", md, "path", "pd"));
+            mall.getExits().add(new Exit("An escalator of doom", tvod, "escalator", "escalator pof doom"));
+            md.getExits().add(new Exit("The Cab", mall, "cab"));
+            md.getExits().add(new Exit("Jump into Lava", tvod, "jump lava", "lava", "jump"));
+
+
+            return tdh;
+        }
+
+        public Location getLocationOf (String intendedLocationName){
+            for (Location location : locationList) {//for each Location in the list we just created
+                if (intendedLocationName.equalsIgnoreCase(location.getName())) {//check to see if intendedLocationName we passes in equals the name of the location
+                    return location;//return the actual Location "tdh" to whatever called getLocationOf)
+                }
+            }
+            return null;
+        }
     }
-}

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 
 public class PackUpCommand extends BaseEmoteCommand {
     public PackUpCommand(InputOutput io) {
-        super("pack up", "You pack your bags.", io);
+        super("You pack your bags.", io, "pack up", "pack");
     }
 }

@@ -11,7 +11,7 @@ public class AttackCommand extends BaseAliasedCommand implements Command {
     private InputOutput io;
 
     public AttackCommand(InputOutput io) {
-        super("a", "att", "attack");
+        super(io,"a", "att", "attack");
         this.io = io;
     }
 
