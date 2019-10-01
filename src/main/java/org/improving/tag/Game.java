@@ -90,6 +90,12 @@ public class Game {
             var tdh = new Location();
             tdh.setName("The Deathly Hallows");
             this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against
+            var adv2 = new Adversary();
+            adv2.setName("Bowser");
+            adv2.setHitPoints(20);
+            adv2.setDamageTaken(0);
+            tdh.setAdversary(adv2);
+            adv2.setItem(UniqueItems.BLUE_SHELL);
 
             var td = new Location();
             td.setName("The Dessert");
@@ -131,9 +137,11 @@ public class Game {
             var md = new Location();
             md.setName("Mount Doom");
             this.locationList.add(md);
-            var adv = new Adversary();
-            adv.setName("Sauron");
-            md.setAdversary(adv);
+            var adv1 = new Adversary();
+            adv1.setName("Sauron");
+            adv1.setHitPoints(100);
+            adv1.setDamageTaken(0);
+            md.setAdversary(adv1);
 
             var tvod = new Location();
             tvod.setName("The Volcano of Death");
