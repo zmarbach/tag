@@ -76,7 +76,7 @@ public class Game {
         this.setEndTime(new Date());
         }
 
-        private Command getValidCommand (String input){
+        private Command getValidCommand (String input) {
             Command validCommand = null;
             for (Command command : Commands) {
                 if (command.isValid(input, this)) {

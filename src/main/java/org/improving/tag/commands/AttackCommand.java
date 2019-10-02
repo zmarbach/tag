@@ -2,6 +2,7 @@ package org.improving.tag.commands;
 
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
+import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -41,6 +42,7 @@ public class AttackCommand extends BaseAliasedCommand implements Command {
                 var playerInventory = game.getPlayer().getInventory();
                 var advItem = game.getPlayer().getLocation().getAdversary().getItem();
                 playerInventory.addItem(advItem);
+                game.getPlayer().getLocation().getAdversary().setItem(UniqueItems.NOTHING);
                 io.displayText("You have defeated " + game.getPlayer().getLocation().getAdversary().getName() + " and stolen " + advItem);
                 game.getPlayer().getLocation().setAdversary(null);
             }
