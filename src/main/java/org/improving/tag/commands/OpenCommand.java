@@ -18,7 +18,8 @@ public class OpenCommand extends BaseAliasedCommand {
     @Override
     public void childExecute(String input, Game game) {
         var item = game.getPlayer().getLocation().openTreasureChest();
-        io.displayText("You have found " + item); //Java knows to convert the item to a string, it automatically calls the toString method on UniqueItems (Java knows because the " + portion signifies that the result need to be a string)
+        io.displayText("You have found " + item); //when we concatenate item with a string, Java know that it needs to call the toString method for whatever the object is. item is an Item, so it looks at implementors of Item interface and finds the toString method on UniqueItems (which returns the name and description)
+        //Java knows which actual implementor we are referring to EVEN if we dont specify above (not sure how but it does???)
 
         game.getPlayer().getInventory().addItem(item);
 
