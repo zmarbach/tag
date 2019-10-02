@@ -8,11 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    public Inventory() {
-        items.add(UniqueItems.EVERLASTING_GOBSTOPPER);
-        items.add(UniqueItems.UNFORGETTABLE_MUSHROOM);
-        items.add(UniqueItems.EGGO_WAFFLE);
-    }
     private final List<Item> items = new ArrayList<>();
 
     public boolean isEmpty() {
