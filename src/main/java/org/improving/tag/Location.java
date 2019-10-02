@@ -67,4 +67,13 @@ public class Location {
             treasureChest = TreasureChest.NO_TREASURE;//getting rid of the treasure chest. Could also do this with simple setter after getting the item
             return treasureItem;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Location) {
+                Location loc = (Location) obj;
+                return this.getName().equals(loc.getName()) && this.getDescription().equals(loc.getDescription());
+            }
+            return super.equals(obj);
+        }
     }

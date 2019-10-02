@@ -26,7 +26,7 @@ public class LookCommand extends BaseAliasedCommand {
         io.displayText("Exits:");
 
         for (var Exit: location.getExits()){
-            io.displayText("  "+ Exit.getName());
+            io.displayText("  "+ Exit);
         }
     }
 }
