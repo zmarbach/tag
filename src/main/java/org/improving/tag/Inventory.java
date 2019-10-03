@@ -6,6 +6,7 @@ import org.improving.tag.items.UniqueItems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Inventory {
     private final List<Item> items = new ArrayList<>();
@@ -20,11 +21,15 @@ public class Inventory {
 
     public String getInventoryDisplay() {
         String displayString = "You have these items:";
-        items.sort(new ItemComparator());//this puts things in alpha order
-        for (Item item : items) {
-            displayString += "\n" + item; // '+=' same thing as displayString = displayString + "\n" + item
-        }
-        return displayString;
+        return items.stream().sorted(new ItemComparator()).map(item -> "\n" + item).reduce(displayString, (answer, itemName) -> answer += itemName);
+        // start with display string, then check each item in the list and add the itemName to the end of the answer
+        //keep doing this for all items and you end up with a final answer that has the displayString and all the item names below it
+
+        //Stream above is the same as below...
+            // items.sort(new ItemComparator());//this puts things in alpha order
+            //for (Item item : items) {
+            //   displayString += "\n" + item; // '+=' same thing as displayString = displayString + "\n" + item
+            //}
     }
 }
 

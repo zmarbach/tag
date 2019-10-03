@@ -5,8 +5,11 @@ import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class Game {
@@ -77,13 +80,18 @@ public class Game {
         }
 
         private Command getValidCommand (String input) {
-            Command validCommand = null;
-            for (Command command : Commands) {
-                if (command.isValid(input, this)) {
-                    return command;
-                }
-            }
-            return null;
+            return Stream.of(Commands).filter(command -> command.isValid(input, this)).findFirst().orElse(null);
+            //this filters through all commands and runs isValid method. If command is valid then it finds first command and returns it.
+            // If the command is NOT valid then it returns null
+
+            // ^^^ STREAM version of for each loop below
+
+                    //for (Command command : Commands) {
+               // if (command.isValid(input, this)) {
+                    //return command;
+               // }
+            //}
+           //return null;
         }
 
         private Location buildWorld () {//private because we dont want anyone else to build a world
