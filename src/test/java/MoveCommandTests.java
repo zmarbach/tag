@@ -19,7 +19,7 @@ public class MoveCommandTests {
     public void arrange() {
         //Arrange
         io = new TestInputOutput();
-        target = new MoveCommand(io);
+        target = new MoveCommand(io,null);
     }
 
     @Test

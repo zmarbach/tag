@@ -9,7 +9,7 @@ public class LookCommand extends BaseAliasedCommand {
     private InputOutput io; //had to make variable for io (so we can use it below)...BaseEmote used to hold it for us when it was old look command that extended BaseEmote
 
     public LookCommand(InputOutput io) {
-        super(io, "look", "where am i", "whereami", "?donde estoy?");
+        super(io, "l","look", "where am i", "whereami", "?donde estoy?");
         this.io = io;
 
         //took entire isValid method off of this and moved it to BaseAliasCommand, where we pass aliases through super above.

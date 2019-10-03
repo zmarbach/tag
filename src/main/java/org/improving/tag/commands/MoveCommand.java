@@ -1,18 +1,18 @@
 package org.improving.tag.commands;
 
-import org.improving.tag.Exit;
-import org.improving.tag.Game;
-import org.improving.tag.InputOutput;
+import org.improving.tag.*;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class MoveCommand extends BaseAliasedCommand {//takes the isValid and execute methods below because it is an implementor of Command interface
     private InputOutput io;
+    private MovementStore movementStore;
 
-    public MoveCommand(InputOutput io) {
+    public MoveCommand(InputOutput io, MovementStore movementStore) {
         super(io,"move", "m", "mo", "mov");
         this.io = io;
+        this.movementStore = movementStore;
     }
 
     @Override
@@ -55,6 +55,9 @@ public class MoveCommand extends BaseAliasedCommand {//takes the isValid and exe
             if (exit != null) break;
         }
         if (exit == null) throw new UnsupportedOperationException();//this will go to catch block of BaseAliasedCommand
+
+        Location locationToStore = game.getPlayer().getLocation();
+        var locationStack = movementStore.getLocationStack().push(locationToStore);
 
         game.getPlayer().setLocation(exit.getDestination());///this is where we SET the new location of the player after we move (the destination of the exit name or alias the user typed)
         io.displayText("You travel " + exit.getName() + ".");
