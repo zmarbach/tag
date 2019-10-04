@@ -8,23 +8,23 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class SwingCommand extends BaseAliasedCommand {
+public class FireballCommand extends BaseAliasedCommand {
     private InputOutput io;
-    private static int swingCount = 0;
+    private static int fbCount = 0;
 
-    public SwingCommand(InputOutput io, String... aliases) {
-        super(io, "s", "swing");
+    public FireballCommand(InputOutput io, String... aliases) {
+        super(io, "f", "fb", "fireball", "use fireball");
         this.io = io;
     }
 
     @Override
     public void childExecute(String input, Game game) {
         if (game.getPlayer().getLocation().getAdversary() == null) {
-            io.displayText("What do you want to swing at? There is nobody here.");
+            io.displayText("There is nobody there. Do you want to waste a perfectly good fireball?");
             return;
         } else {
-            swingCount++;
-            if (swingCount < 6) {
+            fbCount++;
+            if (fbCount < 6) {
                 Random r = new Random();
                 int num = r.nextInt(100) + 1;
                 if (num <= 5) {
@@ -33,13 +33,13 @@ public class SwingCommand extends BaseAliasedCommand {
                     var advItem = game.getPlayer().getLocation().getAdversary().getItem();
                     game.getPlayer().getInventory().addItem(advItem);
                     game.getPlayer().getLocation().getAdversary().setItem(UniqueItems.NOTHING);
-                    io.displayText("Attack was massively effective! You have killed " + a.getName() + " and stolen " + advItem);
+                    io.displayText("Fireball was massively effective! " + a.getName() + " was consumed by flames and you stole " + advItem);
                     game.getPlayer().getLocation().setAdversary(null);
                 } else {
-                    io.displayText("Swing missed. You only get 5 swings/game. You have " + String.valueOf(5-swingCount) + " swings left.");
+                    io.displayText("Fireball missed. You only get 5 fireballs/game. You have " + String.valueOf(5-fbCount) + " fireballs left.");
                 }
             } else {
-                io.displayText("Sorry. You can only use swing 5 times per game. Should have made them count.");
+                io.displayText("Sorry, no more fireballs. You should have made them count.");
             }
         }
     }
