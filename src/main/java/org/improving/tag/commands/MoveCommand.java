@@ -57,7 +57,8 @@ public class MoveCommand extends BaseAliasedCommand {//takes the isValid and exe
         if (exit == null) throw new UnsupportedOperationException();//this will go to catch block of BaseAliasedCommand
 
         Location locationToStore = game.getPlayer().getLocation();
-        var locationStack = movementStore.getLocationStack().push(locationToStore);
+        movementStore.getLocationStack().push(locationToStore);
+
 
         game.getPlayer().setLocation(exit.getDestination());///this is where we SET the new location of the player after we move (the destination of the exit name or alias the user typed)
         io.displayText("You travel " + exit.getName() + ".");

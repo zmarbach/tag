@@ -10,7 +10,7 @@ import java.util.Random;
 @Component
 public class FireballCommand extends BaseAliasedCommand {
     private InputOutput io;
-    private static int fbCount = 0;
+    private int fbCount = 0;
 
     public FireballCommand(InputOutput io, String... aliases) {
         super(io, "f", "fb", "fireball", "use fireball");
