@@ -7,19 +7,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BackCommand extends BaseAliasedCommand {
-    private MovementStore movementStore;
 
-    public BackCommand(InputOutput io, MovementStore movementStore, String... aliases) {
+    public BackCommand(InputOutput io, String... aliases) {
         super(io, "back", "b");
-        this.movementStore = movementStore;
     }
 
     @Override
     public void childExecute(String input, Game game) {
-        if (movementStore.getLocationStack().isEmpty()) {
+        if (game.getPlayer().getMs().getLocationStack().isEmpty()) {
             io.displayText("There is no location behind you. You cannot go back.");
         } else {
-            var prevLocation = movementStore.getLocationStack().pop();
+            var prevLocation = game.getPlayer().getMs().getLocationStack().pop();
             if (game.getPlayer().getLocation() == prevLocation) {
                 io.displayText("You cannot go back any further.");
             } else {

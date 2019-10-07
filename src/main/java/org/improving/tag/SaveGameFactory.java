@@ -1,30 +1,26 @@
 package org.improving.tag;
 
-import jdk.dynalink.beans.StaticClass;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class SaveGameFactory {
     private final FileSystemAdapter fsa;//need to create different class to interact with file system. SaveGame will NEED an instance of FSA in order to work
     private final InputOutput io;//need to give SaveGameFactory the ability to tell user there is an error if necessary when trying to save the game
-    private final MovementStore ms;
 
     public SaveGameFactory(FileSystemAdapter fsa, InputOutput io, MovementStore ms) { //SaveGameFactory requires a FileSystemAdapter as parameter...need an instance of FSA to make this work
         this.fsa = fsa;
         this.io = io;
-        this.ms = ms;
     }
 
 
     public String save(Game game) { //create file and then store location name in that file and give us the filepath
         Map<String, String> saveContents = new HashMap<>(); //dictionary stores the "key" and "value" associated with the key
 
-        Stack<Location> locStack = ms.getLocationStack();
+        Stack<Location> locStack = game.getPlayer().getMs().getLocationStack();
         int count = 0;
         for (Location prevLoc : locStack) {
             saveContents.put("prevLoc" + String.valueOf(count), prevLoc.getName());
@@ -59,7 +55,7 @@ public class SaveGameFactory {
                 } else {
                     String prevLocName = pair.getValue();
                     Location prevLoc = g.getLocationOf(prevLocName);
-                    ms.getLocationStack().push(prevLoc);
+                    g.getPlayer().getMs().getLocationStack().push(prevLoc);
                 }
             }
         } catch (IOException ex) {

@@ -3,6 +3,8 @@ package org.improving.tag.commands;
 import org.improving.tag.Game;
 import org.improving.tag.InputOutput;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,7 @@ public abstract class BaseAliasedCommand implements Command {//abstract because 
         }
     }
 
-    public void childExecute (String input, Game game){ }
+    public void childExecute (String input, Game game) throws IOException { }
 
     public String getErrorMessage(){
         return "Huh? I don't understand.";
@@ -38,8 +40,10 @@ public abstract class BaseAliasedCommand implements Command {//abstract because 
     public void execute(String input, Game game) {
         try {
             childExecute(input, game);
-        } catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException | FileNotFoundException ex) {
             io.displayText(getErrorMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

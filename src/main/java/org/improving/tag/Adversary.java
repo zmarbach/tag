@@ -3,8 +3,10 @@ package org.improving.tag;
 import org.improving.tag.items.Item;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
-public class Adversary {
+public class Adversary implements Serializable {
     private String name;
     private int hitPoints;
     private int damageTaken;

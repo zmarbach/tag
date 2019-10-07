@@ -22,7 +22,7 @@ public class SetNameTest {
         target = new SetCommand(io);
         game =  mock(Game.class);//creating a new mock Game. Getting the actually class, not an instance of the class.
 
-        Player player = new Player(null);
+        Player player = new Player(null, null);
         player = spy(player);
         player.setName("hi");
         player.setHitPoints(50);
@@ -33,7 +33,7 @@ public class SetNameTest {
 
     @Test
     public void execute_should_set_Name() {
-        Player player = new Player(null);//don't need location because testing setting name, not about setting location.
+        Player player = new Player(null, null);//don't need location because testing setting name, not about setting location.
         player = spy(player);//follows player around and reports on everything it does. Wrapping it with a "spy". don't talk to the Player itself, talk to the spy player (sort of like mock)
         player.setName("hi");
         player.setHitPoints(50);

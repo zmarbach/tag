@@ -2,10 +2,11 @@ package org.improving.tag;
 
 import org.improving.tag.items.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Location {
+public class Location implements Serializable {
     private String name = "";
     private String description = "";
     private List<String> tags = new ArrayList<String>();

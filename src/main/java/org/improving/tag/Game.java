@@ -26,7 +26,7 @@ public class Game {
         this.Commands = Commands;
         this.io = io;
         this.saveFactory = saveFactory;
-        this.p = new Player(startingLocation); // could also add p as a parameter and set it equal to 'p' here. then would have to put '@Component' on the Player class so Spring could generate one for us...rather than making a new instance of Player here)
+        this.p = new Player(startingLocation, new MovementStore()); // could also add p as a parameter and set it equal to 'p' here. then would have to put '@Component' on the Player class so Spring could generate one for us...rather than making a new instance of Player here)
         //have to set Command = this.Commands so we can reference Commands outside of this scope (outside curly braces)
         //start time not in this because we want to wait to start the clock once the game is actually RUN...not when the object is initiated.
         //exit time not in this cuz not applicable, cant set the end time at the beginning.

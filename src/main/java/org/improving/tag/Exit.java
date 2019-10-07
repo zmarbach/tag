@@ -1,11 +1,12 @@
 package org.improving.tag;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Exit {
+public class Exit implements Serializable {
     private String name;
     private Location destination;
     private List<String> aliases = new ArrayList<String>();
