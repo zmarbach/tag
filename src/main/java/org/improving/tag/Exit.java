@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Exit {
     private String name;
     private Location destination;
+    private int destinationId;
     private List<String> aliases = new ArrayList<String>();
 
     public Exit() {
@@ -19,6 +20,13 @@ public class Exit {
         this.aliases.addAll(Arrays.asList(aliases));//take all of the "aliases" we pass and add them to the alias list for this instance of Exit (aliases above)
     }
 
+    public int getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(int destinationId) {
+        this.destinationId = destinationId;
+    }
 
     public String getName() {
         return name;

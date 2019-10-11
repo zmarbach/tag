@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
+    private int id;
     private String name = "";
     private String description = "";
     private List<String> tags = new ArrayList<String>();
@@ -13,6 +14,14 @@ public class Location {
     private List<Exit> exits = new ArrayList<Exit>();
     private Adversary adversary;
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;//each location will have this treasure chest as default (set method will override this)
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Adversary getAdversary() {
         return adversary;
@@ -48,6 +57,10 @@ public class Location {
 
     public List<Exit> getExits() {
         return exits;
+    }
+
+    public void setExits(List<Exit> exits) {
+        this.exits = exits;
     }
 
     public void setTreasureChest(TreasureChest treasureChest) {

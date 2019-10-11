@@ -1,5 +1,7 @@
 package org.improving.tag;
 
+import org.improving.tag.database.ExitDAO;
+import org.improving.tag.database.LocationDAO;
 import org.improving.tag.items.UniqueItems;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +11,34 @@ import java.util.List;
 @Component
 public class WorldBuilder {
     private List<Location> locationList = new ArrayList<>();
+    private LocationDAO locationDAO;
+    private ExitDAO exitDAO;
 
-    public Location buildWorld () {//private because we
+    public WorldBuilder(LocationDAO locationDAO, ExitDAO exitDAO) {
+        this.locationDAO = locationDAO;
+        this.exitDAO = exitDAO;
+    }
+
+    public Location buildWorld() {
+        try {
+            List<Location> locations = locationDAO.findAll();
+            for (Location location : locations) {
+                List<Exit> exits = exitDAO.findExitsByOriginId(location.getId());
+                exits.forEach(exit -> {
+                    Location destination = locations.stream().filter(loc -> loc.getId() == exit.getDestinationId()).findFirst().orElseThrow();
+                    exit.setDestination(destination);
+                    location.getExits().add(exit);
+                });
+            }
+            System.out.println(locations.size());
+            locationList = locations;
+            return locationList.get(0);
+        } catch (Exception e){
+            return buildHardCodedWorld();
+        }
+    }
+
+    public Location buildHardCodedWorld () {
         var tdh = new Location();
         tdh.setName("The Deathly Hallows");
         this.locationList.add(tdh);//add each location to the list of locations, so we can use this list of locations to cross check against

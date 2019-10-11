@@ -27,7 +27,7 @@ public class FireballCommand extends BaseAliasedCommand {
             if (fbCount < 6) {
                 Random r = new Random();
                 int num = r.nextInt(100) + 1;
-                if (num <= 5) {
+                if (num >=1 ) {
                     var a = game.getPlayer().getLocation().getAdversary();
                     a.setHitPoints(0);
                     var advItem = game.getPlayer().getLocation().getAdversary().getItem();
