@@ -1,6 +1,5 @@
 package org.improving.tag;
 
-import java.util.BitSet;
 
 public class Player {
     private String name = "The Player";

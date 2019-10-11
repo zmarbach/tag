@@ -1,7 +1,6 @@
 import org.improving.tag.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,7 +21,7 @@ public class SaveGameFactoryTests {
         io = new TestInputOutput();
         fsa = mock(FileSystemAdapter.class); // create mock version of FileSystemAdapter for testing purposes instead of create interface, although we will create an interface for FileSystemAdapter in future because will want to let other classes implement FSA
         target = new SaveGameFactory(fsa, io, ms);
-        g = new Game(null, io, target);//had to create variables above to pass them as parameters
+        g = new Game(null, io, target, new WorldBuilder());//had to create variables above to pass them as parameters
     }
 
     /*@Test

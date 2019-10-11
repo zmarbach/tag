@@ -1,4 +1,5 @@
 import org.improving.tag.Game;
+import org.improving.tag.WorldBuilder;
 import org.improving.tag.commands.JumpCommand;
 import org.improving.tag.commands.WhoAmICommand;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,7 @@ public class WhoAmICommandTests {
     public void arrange() {
         io = new TestInputOutput();
         target = new WhoAmICommand(io);
-        game = new Game(null, io, null);
+        game = new Game(null, io, null, new WorldBuilder());
     }
 
     @Test
