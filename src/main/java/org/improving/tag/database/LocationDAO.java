@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,20 +30,19 @@ public class LocationDAO {
                         location.setId(result.getInt("LocId"));
                         location.setName(result.getString("LocName"));
                         location.setDescription(result.getString("Description"));
-                            if (result.getString("AdversaryId") != null) {
-                                Adversary adversary = new Adversary();
-                                adversary.setName(result.getString("AdvName"));
-                                adversary.setHitPoints(result.getInt("HitPoints"));
-                                adversary.setDamageTaken(result.getInt("DamageTaken"));
-                                String dropItem = result.getString("DropItem");
-                                    if (null != dropItem) {
-                                        adversary.setItem(Arrays //actually SET the item on the adversary (based on what it says in SQL database)
-                                                .stream(UniqueItems.values())
-                                                .filter(item -> item.getName().equals(dropItem))
-                                                .findFirst()
-                                                .orElse(null));
-                                    }
+
+                        if (result.getString("AdversaryId") != null) {
+                            EntityManager em = JPAUtility.getEntityManager();
+                            Adversary adversary = em.find(Adversary.class, Long.parseLong(result.getString("AdversaryId"))); //use EntityManager to find an advversary with that Id
+
+                                //Adversary adversary = new Adversary();
+                                //adversary.setName(result.getString("AdvName"));
+                                //adversary.setHitPoints(result.getInt("HitPoints"));
+                                //adversary.setDamageTaken(result.getInt("DamageTaken"));
+                                //String dropItem = result.getString("DropItem");
+
                                     location.setAdversary(adversary); //actually PUT the adversary at the location
+                                    System.out.println("Set adversary to: " + adversary.getName());
                             }
                             return location;
             });

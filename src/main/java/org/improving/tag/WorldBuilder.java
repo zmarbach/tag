@@ -32,8 +32,9 @@ public class WorldBuilder {
             }
             System.out.println(locations.size());
             locationList = locations;
-            return locationList.get(0);
+            return locationList.get(2);
         } catch (Exception e){
+            e.printStackTrace();
             return buildHardCodedWorld();
         }
     }
