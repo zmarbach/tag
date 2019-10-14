@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class BackCommand extends BaseAliasedCommand {
     private MovementStore movementStore;
 
-    public BackCommand(InputOutput io, MovementStore movementStore, String... aliases) {
+    public BackCommand(InputOutput io, MovementStore movementStore) {
         super(io, "back", "b");
         this.movementStore = movementStore;
     }

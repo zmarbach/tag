@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class AttackCommand extends BaseAliasedCommand implements Command {
+public class AttackCommand extends BaseAliasedCommand{
     private InputOutput io;
 
     public AttackCommand(InputOutput io) {
@@ -18,7 +18,6 @@ public class AttackCommand extends BaseAliasedCommand implements Command {
 
     @Override
     public void execute(String input, Game game) {
-        input = input.trim();
         if (game.getPlayer().getLocation().getAdversary() == null) {
             io.displayText("Attack what? You idiot.");
             return;
