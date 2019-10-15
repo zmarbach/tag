@@ -119,7 +119,7 @@ public class Exit {
 
     @PostLoad
     public void postLoad() {
-        String[] allAliases = aliasesDb.trim().split(",");
+        String[] allAliases = aliasesDb.trim().replace(" ", "").split(",");
         for(String alias : allAliases) {
             aliases.add(alias);
         }
