@@ -2,10 +2,7 @@ package org.improving.tag;
 
 import org.improving.tag.items.Item;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +18,15 @@ public class Location {
     @Column(name = "Description")
     private String description = "";
 
-    @Transient
+    @OneToMany(mappedBy = "origin")
     private List<Exit> exits = new ArrayList<Exit>();
 
-    @Transient
+    @ManyToOne//(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AdversaryId")
     private Adversary adversary;
 
-    @Column(name = "AdversaryId")
-    private Long AdversaryIdDb;
+    //@Column(name = "AdversaryId")
+    //private Long AdversaryIdDb;
 
     @Transient
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;//each location will have this treasure chest as default (set method will override this)
@@ -92,13 +90,13 @@ public class Location {
             treasureChest = TreasureChest.NO_TREASURE;//getting rid of the treasure chest. Could also do this with simple setter after getting the item
             return treasureItem;
         }
-    public Long getAdversaryIdDb() {
+    /*public Long getAdversaryIdDb() {
         return AdversaryIdDb;
     }
 
     public void setAdversaryIdDb(Long adversaryIdDb) {
         AdversaryIdDb = adversaryIdDb;
-    }
+    }*/
 
         @Override
         public boolean equals(Object obj) {

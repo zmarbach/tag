@@ -18,7 +18,7 @@ public class WhoAmICommandTests {
     public void arrange() {
         io = new TestInputOutput();
         target = new WhoAmICommand(io);
-        game = new Game(null, io, null, new WorldBuilder(null, null));
+        game = new Game(null, io, null, new WorldBuilder(null));
     }
 
     @Test

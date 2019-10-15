@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Entity(name = "adversary")
 public class Adversary {
     @Id
-    long id;
+    Long id;
 
     @Column(name = "Name")
     private String name;

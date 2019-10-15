@@ -2,7 +2,6 @@ package org.improving.tag.database;
 
 import org.improving.tag.Adversary;
 import org.improving.tag.Location;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class LocationDAO {
     }
 
     public List<Location> findAll() {
-        try {
+        //try {
             EntityManager em = JPAUtility.getEntityManager();
             List<Location> locations = em.createQuery("SELECT loc FROM org.improving.tag.Location loc").getResultList();
 
@@ -32,26 +31,26 @@ public class LocationDAO {
                         location.setName(result.getString("LocName"));
                         location.setDescription(result.getString("Description")); */
                 for(Location location : locations) {
-                        if (location.getAdversaryIdDb() != null) {
-                            Adversary adversary = em.find(Adversary.class, location.getAdversaryIdDb()); //use EntityManager to find an advversary with that Id
-
+                        if (location.getAdversary() != null) {
+                    //Adversary adversary = em.find(Adversary.class, location.getAdversary()); //use EntityManager to find an advversary with that Id
+                    //Adversary adversary = location.getAdversary();
                                 //Adversary adversary = new Adversary();
                                 //adversary.setName(result.getString("AdvName"));
                                 //adversary.setHitPoints(result.getInt("HitPoints"));
                                 //adversary.setDamageTaken(result.getInt("DamageTaken"));
                                 //String dropItem = result.getString("DropItem");
 
-                                    location.setAdversary(adversary); //actually PUT the adversary at the location
-                                    System.out.println("Set adversary " + adversary.getName() + " to location " + location.getName());
+                                    //location.setAdversary(adversary); //actually PUT the adversary at the location
+                                    System.out.println("Set adversary " + location.getAdversary().getName() + " to location " + location.getName());
                             }
                             //return locations;
             }
         return locations;
         }
-        catch (DataAccessException e){
-            System.out.println("Exception in JDBC: " + e.getMessage());
-            return null;
+        //catch (DataAccessException e){
+            //System.out.println("Exception in JDBC: " + e.getMessage());
+            //return null;
         }
-    }
+    //}
 
-}
+//}

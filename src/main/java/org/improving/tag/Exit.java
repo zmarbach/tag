@@ -1,29 +1,45 @@
 package org.improving.tag;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-//@Entity(name = "exits")
+@Entity(name = "exits")
 public class Exit {
-    //@Column(name = "Name")
+
+    @Id
+    private int id;
+
+    @Column(name = "Name")
     private String name;
 
-    //@Transient
+    @OneToOne
+    @JoinColumn(name = "DestinationId")
     private Location destination;
 
-    //@Column(name = "DestinationId")
-    private int destinationId;
+    //    @Column(name = "DestinationId")
+    //    private int destinationId;
 
-    //@Transient
+    @ManyToOne
+    @JoinColumn(name = "OriginId")
+    private Location origin;
+
+    @Transient
     private List<String> aliases = new ArrayList<String>();
 
-    //@Column(name = "Aliases")
+    @Column(name = "Aliases")
     private String aliasesDb;
+
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Location origin) {
+        this.origin = origin;
+    }
 
     public void setAliases(List<String> aliases) {
         this.aliases = aliases;
@@ -46,13 +62,13 @@ public class Exit {
         this.aliases.addAll(Arrays.asList(aliases));//take all of the "aliases" we pass and add them to the alias list for this instance of Exit (aliases above)
     }
 
-    public int getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(int destinationId) {
-        this.destinationId = destinationId;
-    }
+//    public int getDestinationId() {
+//        return destinationId;
+//    }
+//
+//    public void setDestinationId(int destinationId) {
+//        this.destinationId = destinationId;
+//    }
 
     public String getName() {
         return name;
@@ -73,6 +89,13 @@ public class Exit {
     public List<String> getAliases() {
         return aliases;
     }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {//when call toString, it will in turn call getName method below, which returns a string of the exit name
@@ -92,6 +115,14 @@ public class Exit {
             return this.getName().equals(exit.getName()) && this.getDestination().equals(exit.getDestination());
         }
         return super.equals(obj);
+    }
+
+    @PostLoad
+    public void postLoad() {
+        String[] allAliases = aliasesDb.trim().split(",");
+        for(String alias : allAliases) {
+            aliases.add(alias);
+        }
     }
 
 
