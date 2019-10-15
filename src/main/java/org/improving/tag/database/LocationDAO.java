@@ -2,13 +2,11 @@ package org.improving.tag.database;
 
 import org.improving.tag.Adversary;
 import org.improving.tag.Location;
-import org.improving.tag.items.UniqueItems;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -21,7 +19,10 @@ public class LocationDAO {
 
     public List<Location> findAll() {
         try {
-            List<Location> locations = jdbcTemplate.query(
+            EntityManager em = JPAUtility.getEntityManager();
+            List<Location> locations = em.createQuery("SELECT loc FROM org.improving.tag.Location loc").getResultList();
+
+                  /*  jdbcTemplate.query(
                     //have to specify all these cuz otherwise there are 2 "Name" columns and SQL doesn't know which one you are referring to
                     "SELECT l.Id as LocId, l.Name as LocName, l.Description, l.AdversaryId, a.Id as AdvId, a.Name as AdvName, a.HitPoints," +
                             " a.DamageTaken, a.AttackDamage, a.DropItem FROM location l LEFT JOIN adversary a ON l.AdversaryId = a.Id",
@@ -29,11 +30,10 @@ public class LocationDAO {
                         Location location = new Location();
                         location.setId(result.getInt("LocId"));
                         location.setName(result.getString("LocName"));
-                        location.setDescription(result.getString("Description"));
-
-                        if (result.getString("AdversaryId") != null) {
-                            EntityManager em = JPAUtility.getEntityManager();
-                            Adversary adversary = em.find(Adversary.class, Long.parseLong(result.getString("AdversaryId"))); //use EntityManager to find an advversary with that Id
+                        location.setDescription(result.getString("Description")); */
+                for(Location location : locations) {
+                        if (location.getAdversaryIdDb() != null) {
+                            Adversary adversary = em.find(Adversary.class, location.getAdversaryIdDb()); //use EntityManager to find an advversary with that Id
 
                                 //Adversary adversary = new Adversary();
                                 //adversary.setName(result.getString("AdvName"));
@@ -42,10 +42,10 @@ public class LocationDAO {
                                 //String dropItem = result.getString("DropItem");
 
                                     location.setAdversary(adversary); //actually PUT the adversary at the location
-                                    System.out.println("Set adversary to: " + adversary.getName());
+                                    System.out.println("Set adversary " + adversary.getName() + " to location " + location.getName());
                             }
-                            return location;
-            });
+                            //return locations;
+            }
         return locations;
         }
         catch (DataAccessException e){

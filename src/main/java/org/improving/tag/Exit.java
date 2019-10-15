@@ -1,15 +1,41 @@
 package org.improving.tag;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+//@Entity(name = "exits")
 public class Exit {
+    //@Column(name = "Name")
     private String name;
+
+    //@Transient
     private Location destination;
+
+    //@Column(name = "DestinationId")
     private int destinationId;
+
+    //@Transient
     private List<String> aliases = new ArrayList<String>();
+
+    //@Column(name = "Aliases")
+    private String aliasesDb;
+
+    public void setAliases(List<String> aliases) {
+        this.aliases = aliases;
+    }
+
+    public String getAliasesDb() {
+        return aliasesDb;
+    }
+
+    public void setAliasesDb(String aliasesDb) {
+        this.aliasesDb = aliasesDb;
+    }
 
     public Exit() {
     }//add this so we can use a totally empty constructor for tests and stuff
@@ -67,4 +93,6 @@ public class Exit {
         }
         return super.equals(obj);
     }
+
+
 }

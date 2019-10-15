@@ -75,6 +75,7 @@ public class Game {
             }
         }
         this.setEndTime(new Date());
+
         }
 
         private Command getValidCommand (String input) {

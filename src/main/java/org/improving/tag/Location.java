@@ -2,18 +2,38 @@ package org.improving.tag;
 
 import org.improving.tag.items.Item;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "location")
 public class Location {
+
+    @Id
     private int id;
+
+    @Column(name = "Name")
     private String name = "";
+
+    @Column(name = "Description")
     private String description = "";
-    private List<String> tags = new ArrayList<String>();
-    ///have to initialize this as soon as we create the class (even if it has nothing in it) otherwise the value is NULL and we will get null pointer exception when we try to run method off of it
+
+    @Transient
     private List<Exit> exits = new ArrayList<Exit>();
+
+    @Transient
     private Adversary adversary;
+
+    @Column(name = "AdversaryId")
+    private Long AdversaryIdDb;
+
+    @Transient
     private TreasureChest treasureChest = TreasureChest.NO_TREASURE;//each location will have this treasure chest as default (set method will override this)
+
+
 
     public int getId() {
         return id;
@@ -47,14 +67,6 @@ public class Location {
         this.description = description;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
-
-    //public void setTags(List<String> tags) {///this is setting the ENTIRE LIST...we want to make someone add and remove the items in the list, not the WHOLE thing.
-    //this.tags = tags;
-    //}
-
     public List<Exit> getExits() {
         return exits;
     }
@@ -80,6 +92,13 @@ public class Location {
             treasureChest = TreasureChest.NO_TREASURE;//getting rid of the treasure chest. Could also do this with simple setter after getting the item
             return treasureItem;
         }
+    public Long getAdversaryIdDb() {
+        return AdversaryIdDb;
+    }
+
+    public void setAdversaryIdDb(Long adversaryIdDb) {
+        AdversaryIdDb = adversaryIdDb;
+    }
 
         @Override
         public boolean equals(Object obj) {

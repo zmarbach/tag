@@ -30,7 +30,6 @@ public class WorldBuilder {
                     location.getExits().add(exit);
                 });
             }
-            System.out.println(locations.size());
             locationList = locations;
             return locationList.get(2);
         } catch (Exception e){
