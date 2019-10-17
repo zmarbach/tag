@@ -1,8 +1,6 @@
 package org.improving.tag.database;
 
-import org.improving.tag.Adversary;
 import org.improving.tag.Location;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -10,11 +8,11 @@ import java.util.List;
 
 @Component
 public class LocationDAO {
-    private final JdbcTemplate jdbcTemplate;
+    //private final JdbcTemplate jdbcTemplate;
 
-    public LocationDAO (JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+   // public LocationDAO (JdbcTemplate jdbcTemplate) {
+        //this.jdbcTemplate = jdbcTemplate;
+    //}
 
     public List<Location> findAll() {
         //try {

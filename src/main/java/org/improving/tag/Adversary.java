@@ -4,7 +4,6 @@ import org.improving.tag.items.Item;
 import org.improving.tag.items.UniqueItems;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity(name = "adversary")
 public class Adversary {
@@ -23,11 +22,11 @@ public class Adversary {
     @Column(name = "AttackDamage")
     private int attackDamage;//assuming this is how powerful each attack is from the adversary;
 
-    @Transient
-    private Item item = UniqueItems.NOTHING;
-
     @Column(name = "DropItem")
-    private String dropItemDb;
+    private UniqueItems item = UniqueItems.NOTHING;
+
+    //@Column(name = "DropItem")
+    //private String dropItemDb;
 
     public long getId() {
         return id;
@@ -37,13 +36,13 @@ public class Adversary {
         this.id = id;
     }
 
-    public String getDropItemDb() {
-        return dropItemDb;
-    }
-
-    public void setDropItemDb(String dropItemDb) {
-        this.dropItemDb = dropItemDb;
-    }
+//    public String getDropItemDb() {
+//        return dropItemDb;
+//    }
+//
+//    public void setDropItemDb(String dropItemDb) {
+//        this.dropItemDb = dropItemDb;
+//    }
 
     public String getName() {
         return name;
@@ -81,18 +80,18 @@ public class Adversary {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(UniqueItems item) {
         this.item = item;
     }
 
-    @PostLoad
-    public void postLoad() {
-        if (null != dropItemDb) {
-            this.setItem(Arrays //actually SET the item on the adversary (based on what it says in SQL database)
-                    .stream(UniqueItems.values())
-                    .filter(item -> item.getName().equals(dropItemDb))
-                    .findFirst()
-                    .orElse(null));
-        }
-    }
+//    @PostLoad
+//    public void postLoad() {
+//        if (null != dropItemDb) {
+//            this.setItem(Arrays
+//                    .stream(UniqueItems.values())
+//                    .filter(item -> item.getName().equals(dropItemDb))
+//                    .findFirst()
+//                    .orElse(null));
+//        }
+//    }
 }

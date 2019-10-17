@@ -1,5 +1,7 @@
 package org.improving.tag;
 
+import org.improving.tag.database.ListOfStrings;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +28,11 @@ public class Exit {
     @JoinColumn(name = "OriginId")
     private Location origin;
 
-    @Transient
-    private List<String> aliases = new ArrayList<String>();
-
     @Column(name = "Aliases")
-    private String aliasesDb;
+    private ListOfStrings aliases = new ListOfStrings();
+
+//    @Column(name = "Aliases")
+//    private String aliasesDb;
 
 
     public Location getOrigin() {
@@ -41,17 +43,17 @@ public class Exit {
         this.origin = origin;
     }
 
-    public void setAliases(List<String> aliases) {
+    public void setAliases(ListOfStrings aliases) {
         this.aliases = aliases;
     }
 
-    public String getAliasesDb() {
-        return aliasesDb;
-    }
-
-    public void setAliasesDb(String aliasesDb) {
-        this.aliasesDb = aliasesDb;
-    }
+//    public String getAliasesDb() {
+//        return aliasesDb;
+//    }
+//
+//    public void setAliasesDb(String aliasesDb) {
+//        this.aliasesDb = aliasesDb;
+//    }
 
     public Exit() {
     }//add this so we can use a totally empty constructor for tests and stuff
@@ -117,13 +119,13 @@ public class Exit {
         return super.equals(obj);
     }
 
-    @PostLoad
-    public void postLoad() {
-        String[] allAliases = aliasesDb.trim().replace(" ", "").split(",");
-        for(String alias : allAliases) {
-            aliases.add(alias);
-        }
-    }
+//    @PostLoad
+//    public void postLoad() {
+//        String[] allAliases = aliasesDb.trim().replace(" ", "").split(",");
+//        for(String alias : allAliases) {
+//            aliases.add(alias);
+//        }
+//    }
 
 
 }
