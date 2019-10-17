@@ -10,7 +10,7 @@ import java.util.List;
 public class Location {
 
     @Id
-    private int id;
+    private Long id;
 
     @Column(name = "Name")
     private String name = "";
@@ -18,10 +18,10 @@ public class Location {
     @Column(name = "Description")
     private String description = "";
 
-    @OneToMany(mappedBy = "origin")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "origin")
     private List<Exit> exits = new ArrayList<Exit>();
 
-    @ManyToOne//(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "AdversaryId")
     private Adversary adversary;
 
@@ -33,11 +33,11 @@ public class Location {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

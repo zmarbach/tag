@@ -1,6 +1,6 @@
 package org.improving.tag;
 
-import org.improving.tag.database.LocationDAO;
+import org.improving.tag.database.LocationRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -8,16 +8,18 @@ import java.util.List;
 
 @Component
 public class WorldBuilder {
-    private List<Location> locationList = new ArrayList<>();
-    private LocationDAO locationDAO;
+    private List<Location> locations = new ArrayList<>();
+    private List<Exit> exits = new ArrayList<>();
+    private LocationRepository locRepo;
 
-    public WorldBuilder(LocationDAO locationDAO) {
-        this.locationDAO = locationDAO;
+    public WorldBuilder(LocationRepository locRepo)
+    {this.locRepo = locRepo;
     }
 
-    public Location buildWorld() {
+    public List<Location> buildLocations() {
         //try {
-            List<Location> locations = locationDAO.findAll();
+        new Exit("exit", new Location(), "a");
+        return locations = locRepo.findAll();
 
 
             //EntityManager em = JPAUtility.getEntityManager();
@@ -30,8 +32,8 @@ public class WorldBuilder {
 //                    location.getExits().add(exit);
 //                });
 //            }
-                locationList = locations;
-            return locationList.get(2);
+                //return locations;
+            //return locationList.get(2);
         //} catch (Exception e){
         //    e.printStackTrace();
         //    return null;
@@ -39,9 +41,13 @@ public class WorldBuilder {
         //}
     }
 
-    public List<Location> getLocationList() {
-        return locationList;
-    }
+//    public List<Exit> buildExits(){
+//        return exits = exitRepo.findAllByName();
+//    }
+
+//    public List<Location> getLocationList() {
+//        return locationList;
+//    }
 
 }
 

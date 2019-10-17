@@ -3,7 +3,6 @@ package org.improving.tag;
 import org.improving.tag.database.ListOfStrings;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -12,19 +11,19 @@ import java.util.Objects;
 public class Exit {
 
     @Id
-    private int id;
+    private Long id;
 
     @Column(name = "Name")
     private String name;
 
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "DestinationId")
     private Location destination;
 
     //    @Column(name = "DestinationId")
     //    private int destinationId;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "OriginId")
     private Location origin;
 
@@ -91,11 +90,12 @@ public class Exit {
     public List<String> getAliases() {
         return aliases;
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

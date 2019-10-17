@@ -1,23 +1,27 @@
-package org.improving.tag.database;
-
-import org.improving.tag.Location;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityManager;
-import java.util.List;
-
-@Component
-public class LocationDAO {
+//package org.improving.tag.database;
+//
+//import org.improving.tag.Location;
+//import org.springframework.stereotype.Component;
+//
+//import javax.persistence.EntityManager;
+//import java.util.List;
+//
+//@Component
+//public class LocationDAO {
     //private final JdbcTemplate jdbcTemplate;
 
    // public LocationDAO (JdbcTemplate jdbcTemplate) {
         //this.jdbcTemplate = jdbcTemplate;
     //}
 
-    public List<Location> findAll() {
+    //public List<Location> findAll() {
+
+        //LocationRepository locationRepository;
+
+        //}
         //try {
-            EntityManager em = JPAUtility.getEntityManager();
-            List<Location> locations = em.createQuery("SELECT loc FROM org.improving.tag.Location loc").getResultList();
+//            EntityManager em = JPAUtility.getEntityManager();
+//            List<Location> locations = em.createQuery("SELECT loc FROM org.improving.tag.Location loc").getResultList();
 
                   /*  jdbcTemplate.query(
                     //have to specify all these cuz otherwise there are 2 "Name" columns and SQL doesn't know which one you are referring to
@@ -28,8 +32,8 @@ public class LocationDAO {
                         location.setId(result.getInt("LocId"));
                         location.setName(result.getString("LocName"));
                         location.setDescription(result.getString("Description")); */
-                for(Location location : locations) {
-                        if (location.getAdversary() != null) {
+    //for(Location location : locations) {
+    // if (location.getAdversary() != null) {
                     //Adversary adversary = em.find(Adversary.class, location.getAdversary()); //use EntityManager to find an advversary with that Id
                     //Adversary adversary = location.getAdversary();
                                 //Adversary adversary = new Adversary();
@@ -39,16 +43,16 @@ public class LocationDAO {
                                 //String dropItem = result.getString("DropItem");
 
                                     //location.setAdversary(adversary); //actually PUT the adversary at the location
-                                    System.out.println("Set adversary " + location.getAdversary().getName() + " to location " + location.getName());
-                            }
+    //System.out.println("Set adversary " + location.getAdversary().getName() + " to location " + location.getName());
+                //}
                             //return locations;
-            }
-        return locations;
-        }
+//}
+//return locations;
+//}
         //catch (DataAccessException e){
             //System.out.println("Exception in JDBC: " + e.getMessage());
             //return null;
-        }
+        //}
     //}
 
 //}

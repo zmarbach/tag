@@ -18,11 +18,14 @@ public class Game {
     private Location startingLocation;
     private final SaveGameFactory saveFactory;
     private List<Location> locationList;
+    //private List<Exit> exitList;
 
 
     public Game(Command[] Commands, InputOutput io, SaveGameFactory saveFactory, WorldBuilder worldBuilder) throws RuntimeException {
-        startingLocation = worldBuilder.buildWorld();
-        locationList = worldBuilder.getLocationList();
+        locationList = worldBuilder.buildLocations();
+        startingLocation = locationList.get(2);
+        //exitList = worldBuilder.buildExits();
+
         this.Commands = Commands;
         this.io = io;
         this.saveFactory = saveFactory;
